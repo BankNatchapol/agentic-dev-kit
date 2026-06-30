@@ -59,57 +59,67 @@ render_template \
   "$TARGET/.agents/skills/agentic-token-optimization/SKILL.md" \
   "$TARGET"
 
+append_marked_file "$TARGET/.codex/config.toml" "mcp" "#" "$CODEX_TMP"
+
 if [ "$INSTALL_TOOLS" = "1" ]; then
   info "Installing local npm dev dependencies"
   if ! command_exists npm; then
     die "npm is required to install local ccusage and Context7. Run scripts/doctor.sh for details."
   fi
-  (
+  if ! (
     cd "$TARGET"
     if [ ! -f package.json ]; then
       npm init -y
     fi
     npm install --save-dev @upstash/context7-mcp ccusage
-  )
+  ); then
+    die "Failed to install local npm dependencies. Fix npm and rerun install."
+  fi
 
   info "Installing Serena into .agent-tools/serena-venv"
   if command_exists uv; then
-    (
+    if ! (
       cd "$TARGET"
-      uv venv .agent-tools/serena-venv --python 3.13 || uv venv .agent-tools/serena-venv
-      .agent-tools/serena-venv/bin/python -m pip install -U pip
-      .agent-tools/serena-venv/bin/python -m pip install -U serena-agent
-    )
+      if [ ! -x .agent-tools/serena-venv/bin/python ]; then
+        uv venv .agent-tools/serena-venv --python 3.13 || uv venv .agent-tools/serena-venv
+      fi
+      uv pip install --python .agent-tools/serena-venv/bin/python -U serena-agent
+    ); then
+      warn "Serena install failed. Rerun scripts/doctor.sh, then rerun install."
+    fi
   else
     warn "Skipping Serena install because uv is missing."
   fi
 
   info "Installing Headroom into .agent-tools/headroom-venv"
   if command_exists uv; then
-    (
+    if ! (
       cd "$TARGET"
-      uv venv .agent-tools/headroom-venv
-      .agent-tools/headroom-venv/bin/python -m pip install -U pip
-      .agent-tools/headroom-venv/bin/python -m pip install -U "headroom-ai[all]"
-    )
+      if [ ! -x .agent-tools/headroom-venv/bin/python ]; then
+        uv venv .agent-tools/headroom-venv
+      fi
+      uv pip install --python .agent-tools/headroom-venv/bin/python -U "headroom-ai[all]"
+    ); then
+      warn "Headroom install failed. Rerun scripts/doctor.sh, then rerun install."
+    fi
   else
     warn "Skipping Headroom install because uv is missing."
   fi
 
   info "Installing RTK into .agent-tools/rtk"
   if command_exists cargo; then
-    (
+    if ! (
       cd "$TARGET"
       cargo install --git https://github.com/rtk-ai/rtk --root "$TARGET/.agent-tools/rtk"
-    )
+    ); then
+      warn "RTK install failed. Rerun scripts/doctor.sh, then rerun install."
+    fi
   else
     warn "Skipping RTK install because cargo is missing."
   fi
 else
   info "Skipping tool installation because --no-tools was provided"
 fi
-
-append_marked_file "$TARGET/.codex/config.toml" "mcp" "#" "$CODEX_TMP"
 
 if [ "$CONFIGURE_AGENTS" = "1" ]; then
   if has_agent claude; then

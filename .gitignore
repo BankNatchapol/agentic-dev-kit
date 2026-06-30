@@ -3,6 +3,7 @@
 /.agents/
 /.claude/
 /.codex/
+/.serena/
 /AGENTS.md
 /CLAUDE.md
 
@@ -16,3 +17,6 @@
 .DS_Store
 .env
 .env.*
+.agent-tools/
+.claude/settings.local.json
+.codex/log/
