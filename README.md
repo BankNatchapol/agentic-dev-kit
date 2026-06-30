@@ -38,6 +38,8 @@ scripts/install.sh --target /path/to/your/project --agents claude,codex
 scripts/status.sh --target /path/to/your/project --agents claude,codex
 ```
 
+`install.sh` is the main setup command. `doctor.sh` checks prerequisites before install, and `status.sh` verifies the result after install.
+
 ## Prerequisites
 
 `doctor.sh` checks the tools needed for a complete local install:
@@ -50,6 +52,19 @@ scripts/status.sh --target /path/to/your/project --agents claude,codex
 - `codex` when configuring Codex
 
 If `uv` or `cargo` is missing, the installer keeps the setup local and skips the affected tool instead of using a global package manager.
+
+When prerequisites are missing, `doctor.sh` prints exact next-step commands. To opt into installing supported missing prerequisites, run:
+
+```bash
+scripts/doctor.sh --target /path/to/your/project --agents claude,codex --install-prereqs
+```
+
+This can install:
+
+- `uv` with the official Astral installer
+- Rust/Cargo with `rustup`
+
+It does not automatically install Node.js, Git, Claude Code, or Codex because those depend more on your preferred system setup and login flow.
 
 For the current directory:
 
@@ -90,7 +105,7 @@ scripts/doctor.sh [--target PATH] [--agents claude,codex]
 scripts/status.sh [--target PATH] [--agents claude,codex]
 ```
 
-`--no-tools` writes guidance/config only. `--no-agent-config` skips agent CLI registration and only writes repo-local files.
+`--no-tools` writes guidance/config only. `--no-agent-config` skips agent CLI registration and only writes repo-local files. `doctor.sh --install-prereqs` opts into installing supported missing prerequisites.
 
 ## Claude Code Support
 
