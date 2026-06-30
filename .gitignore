@@ -6,6 +6,7 @@
 /.serena/
 /AGENTS.md
 /CLAUDE.md
+/ChatGPT_CONTEXT.md
 
 # Local npm dependencies created when installing this kit into this repo
 /node_modules/
