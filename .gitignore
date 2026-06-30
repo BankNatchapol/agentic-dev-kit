@@ -1,0 +1,18 @@
+# agentic-dev-kit local install artifacts
+/.agent-tools/
+/.agents/
+/.claude/
+/.codex/
+/AGENTS.md
+/CLAUDE.md
+
+# Local npm dependencies created when installing this kit into this repo
+/node_modules/
+/package.json
+/package-lock.json
+
+# Logs, caches, and local environment files
+*.log
+.DS_Store
+.env
+.env.*
