@@ -150,23 +150,6 @@ node_modules/.bin/ccusage
 
 Do not run `rtk init -g` or `headroom wrap claude` as part of the default workflow. Those are future opt-in automation paths.
 
-## Low-Cost Token Test
-
-To test whether the kit is helping without touching real projects:
-
-```bash
-scripts/token-test-sandbox.sh all
-```
-
-Then run the printed Codex and Claude prompts in fresh sessions and compare usage:
-
-```bash
-node_modules/.bin/ccusage codex session --json
-node_modules/.bin/ccusage claude session --json
-```
-
-See [docs/token-test.md](docs/token-test.md) for the full low-cost A/B workflow.
-
 ## Troubleshooting
 
 Run:
