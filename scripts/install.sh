@@ -134,7 +134,8 @@ if [ "$CONFIGURE_AGENTS" = "1" ]; then
             "$TARGET/.agent-tools/serena-venv/bin/serena" \
             start-mcp-server \
             --context claude-code \
-            --project "$TARGET"
+            --project "$TARGET" \
+            --open-web-dashboard false
         else
           warn "Skipping Claude Serena MCP entry because local Serena binary is missing."
         fi

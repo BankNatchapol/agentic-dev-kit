@@ -1,6 +1,6 @@
 [mcp_servers.serena]
 command = "__TARGET__/.agent-tools/serena-venv/bin/serena"
-args = ["start-mcp-server", "--context", "codex", "--project", "__TARGET__"]
+args = ["start-mcp-server", "--context", "codex", "--project", "__TARGET__", "--open-web-dashboard", "false"]
 cwd = "__TARGET__"
 startup_timeout_sec = 20
 tool_timeout_sec = 120
@@ -10,4 +10,3 @@ command = "__TARGET__/node_modules/.bin/context7-mcp"
 cwd = "__TARGET__"
 startup_timeout_sec = 20
 tool_timeout_sec = 120
-

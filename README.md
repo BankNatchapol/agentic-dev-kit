@@ -122,6 +122,8 @@ Verify inside Claude Code:
 /mcp
 ```
 
+The installer disables Serena's auto-open dashboard for MCP startup. Agent health checks can start and stop Serena quickly, which leaves stale browser tabs with `Error loading ...` panels. Use `/mcp`, `scripts/status.sh`, or Serena's health check as the source of truth instead of the dashboard tab.
+
 ## Codex Support
 
 The installer writes:
@@ -162,6 +164,7 @@ Common issues:
 - Missing `uv`: Serena and Headroom venv installs are skipped.
 - Missing `cargo`: RTK local source install is skipped.
 - Missing `claude`: Claude MCP registration is skipped, but repo files are still generated.
+- Serena dashboard shows `Error loading ...`: close the stale tab and verify with `scripts/status.sh` or `.agent-tools/serena-venv/bin/serena project health-check .`.
 - Codex does not show MCP servers: confirm the project is trusted and inspect `.codex/config.toml`.
 - Context7 binary missing: confirm `npm install` completed in the target repo.
 
